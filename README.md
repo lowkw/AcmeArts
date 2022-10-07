@@ -1,2 +1,2 @@
 # AcmeArts
-Acme Arts gallery website
+Acme Arts website development
