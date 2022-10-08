@@ -22,6 +22,9 @@
 				  echo "<a class=\"nav-link\" href=\"style.php\">Style</a>";
 				echo "</li>";
 				echo "<li class=\"nav-item\">";
+				  echo "<a class=\"nav-link\" href=\"inventory.php\">Inventory</a>";
+				echo "</li>";
+				echo "<li class=\"nav-item\">";
 				  echo "<a class=\"nav-link\" href=\"contact.php\">Contact</a>";
 				echo "</li>";
 			  echo "</ul>";

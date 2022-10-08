@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Low Kok Wei">        
-	<title>Accordion Definitions · Bootstrap 5.2</title>
+	<title>Artist</title>
 
 	<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">       
 	<!-- Custom styles for this template -->
@@ -47,17 +47,20 @@
 					$result = $mysqli->query($sql);			
 					if ($result->num_rows>0){
 						echo "<div class=\"row row-cols-3 g-3 p-3\">";
-						while($row = $result->fetch_assoc()){					
-							echo "<div class=\"card-columns\">";
-							  echo "<div class=\"card\">";
-								echo "<img class=\"card-img-top\" src=\"...\" alt=\"Card image cap\">";
-								echo "<div class=\"card-body\">";
-								  echo "<h5 class=\"card-title\">Card title</h5>";
-								  echo "<p class=\"card-text\">Title :". $row["question"]."</p>";
-								  echo "<p class=\"card-text\"><small class=\"text-muted\">Last updated 3 mins ago</small></p>";
-								echo "</div>";						
-							  echo "</div>";						  
-							echo "</div>";					
+						while($row = $result->fetch_assoc()){				
+  ?>
+							<div class="card-columns">
+							  <div class="card">
+								<img class="card-img-top" src="..." alt="Card image cap">
+								<div class="card-body">
+								  <h5 class="card-title">Card title</h5>
+								  <p class="card-text">Title :<?=$row["question"]?></p>
+								  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+								  <a href="painting.php?&id=<?=$row['id']?>" class="btn btn-primary">View</a>
+								</div>						
+							  </div>						  
+							</div>					
+  <?php															
 						}
 						echo "</div>";
 					}
