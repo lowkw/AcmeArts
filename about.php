@@ -15,7 +15,7 @@
   <body>    		    
 	<?php
 		include_once('include/navbar.php');
-		include_once('include/db_init_oop.php');
+		//include_once('include/db_init_oop.php');
 	?>
 	<main class="container">
 	  <div class="bg-light p-3 rounded">

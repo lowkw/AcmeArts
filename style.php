@@ -15,7 +15,7 @@
   <body>    	
   <?php
 	include_once('include/navbar.php');
-	include_once('include/db_connect_oop.php');	
+	include_once('include/db_connect_pdo.php');	
   ?>	
 
   
@@ -24,49 +24,62 @@
 		<h1>Style</h1>				
 						
 			<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post">
-				<select name="Style_ID" class="form-select">
-					<option selected>Select style</option>
+				<select name="ArtStyle" class="form-select">
+					<option selected>Select art style</option>
   <?php		
-					$sql = "SELECT id, question from QueDef";
-					$result = $mysqli->query($sql);			
-						if ($result->num_rows>0){
-							while($row = $result->fetch_assoc()){
-								echo '<option value="'. $row["id"].'">' .$row["question"].'</option>';
-								
+					try {
+						$sql = "SELECT * FROM Style";
+						$result = $pdo->query($sql);			
+						if ($result->rowCount()>0){							
+							while($row = $result->fetch()){																
+								echo '<option value="'. $row["ArtStyle"].'">' .$row["ArtStyle"].'</option>';
 							}
-						}
+							unset($result);
+						}												
+					} catch(PDOException $e) {
+						die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+					}																		
   ?>
-				</select>
+				</select>			
 			<button type="submit" class="btn btn-primary" name="Select">Submit</button>
 			</form>
   <?php		
 			if (isset($_POST['Select'])) {
-				if(!empty($_POST['Style_ID'])) {
-					$selected = $_POST['Style_ID'];
-					$sql = "SELECT id, question from QueDef where id = '$selected'";
-					$result = $mysqli->query($sql);			
-					if ($result->num_rows>0){
-						echo "<div class=\"row row-cols-3 g-3 p-3\">";
-						while($row = $result->fetch_assoc()){
-  ?>							
-							<div class="card-columns">
-							  <div class="card">
-								<img class="card-img-top" src="..." alt="Card image cap">
-								<div class="card-body">
-								  <h5 class="card-title">Card title</h5>
-								  <p class="card-text">Title :<?=$row["question"]?></p>
-								  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-								  <a href="painting.php?&id=<?=$row['id']?>" class="btn btn-primary">View</a>
-								</div>						
-							  </div>						  
-							</div>					
-  <?php
+				if(!empty($_POST['ArtStyle'])) {
+					$selected = $_POST['ArtStyle'];
+					
+					try {
+						$sql = "SELECT * FROM Painting WHERE ArtStyle = '$selected'";
+						$result = $pdo->query($sql);			
+						if ($result->rowCount()>0){
+										
+							echo "<div class=\"row row-cols-3 g-3 p-3\">";
+							while($row = $result->fetch()){ 						
+  ?>
+								<div class="card-columns">
+								  <div class="card">
+									<img class="card-img-top" src="data:image/png;base64, <?php echo base64_encode($row['Thumbnail']); ?>" alt="Card image cap">
+									<div class="card-body">
+									  <h5 class="card-title">Title : <?=$row['Title']?></h5>
+									  <p class="card-text">Year : <?=$row['Year']?></p>
+									  <p class="card-text">Artist : <?=$row['ArtStyle']?></p>
+									  <p class="card-text">Style : <?=$row['ArtStyle']?></p>
+									  <p class="card-text">Media : <?=$row['Medium']?></p>
+									  <a href="painting.php?&title=<?=$row['Title']?>" class="btn btn-primary">View</a>
+									</div>
+								  </div>						  
+								</div>				
+  <?php															
+							}
+							unset($result);
+							echo "</div>";							
 						}
-						echo "</div>";
+					} catch(PDOException $e) {
+						die("ERROR: Could not able to execute $sql. " . $e->getMessage());
 					}
 				}
 			}
-			include_once('include/db_close_oop.php');		  					
+			include_once('include/db_close_pdo.php');		  					
   ?>
 	</div>
 	</main>  

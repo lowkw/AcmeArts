@@ -15,11 +15,16 @@
   <body>    		    
   <?php
 	include_once('include/navbar.php');
-	include_once('include/db_connect_oop.php');
-	if (isset($_GET['id'])){
-		$id = $_GET['id'];
-		$sql = "SELECT id, question from QueDef where id = '$id'";
-			$result = $mysqli->query($sql);						
+	include_once('include/db_connect_pdo.php');
+	if (isset($_GET['title'])){
+		//$title = $_GET['title'];	
+		$title = filter_var($_GET['title'], FILTER_SANITIZE_STRING);
+		try {
+			$sql = "SELECT * FROM painting where title = '$title'";
+			$result = $pdo->query($sql);			
+		} catch(PDOException $e) {
+			die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+		}
 	} else {
 		exit('Painting does not exist');
 	}
@@ -29,24 +34,32 @@
 	  <div class="bg-light p-3 rounded">
 		<h1>Painting</h1> 
   <?php		
-			if ($result->num_rows>0){
-				echo "<div class=\"row row-cols-2 g-3\">";
-				$row = $result->fetch_assoc()
+ 			if ($result->rowCount()>0){				
+				echo "<div class=\"row\">";
+				$row = $result->fetch()
   ?>				
-					<div class="card-columns">
-					  <div class="card">
-						<img class="card-img-top" src="..." alt="Card image cap">
+				<div class="card-columns">
+					<div class="card">						
+						<img class="card-img-top" src="data:image/png;base64, <?php echo base64_encode($row['Image']); ?>" alt="Card image cap">
 						<div class="card-body">
-						  <h5 class="card-title">Card title</h5>
-						  <p class="card-text">Title : <?=$row["question"]?></p>
-						  <p class="card-text"><small class=\"text-muted\">Last updated 3 mins ago</small></p>
-						</div>						
-					  </div>						  
+							<h5 class="card-title">Title : <?=$row['Title']?></h5>
+							<p class="card-text">Year : <?=$row['Year']?></p>
+							<p class="card-text">Artist : <?=$row['ArtistName']?></p>
+							<p class="card-text">Style : <?=$row['ArtStyle']?></p>
+							<p class="card-text">Media : <?=$row['Medium']?></p>
+						</div>						  
 					</div>					
-  <?php									  
+  <?php			
+				unset($result);
 				echo "</div>";
+			} else {
+  ?>					
+				<div class="alert alert-warning " role="alert">				  				  
+					Painting title not found 				  
+				</div>
+  <?php
 			}
-			include_once('include/db_close_oop.php');			
+			include_once('include/db_close_pdo.php');			
   ?>
 	</div>
 	</main>  

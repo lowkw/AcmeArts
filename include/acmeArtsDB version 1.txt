@@ -1,0 +1,96 @@
+CREATE DATABASE IF NOT EXISTS acmeArtsDB;
+USE acmeArtsDB;
+
+CREATE TABLE Artist(
+ArtistID INT NOT NULL AUTO_INCREMENT, 
+Name VARCHAR(255) NOT NULL,
+PRIMARY KEY(ArtistID)
+);
+
+INSERT INTO Artist(Name)
+VALUES 
+	('August Renoir'),
+	('Michelangelo'),
+	('Vincent Van Gogh'),
+	('Leonardo da Vinci'),
+	('Claude Monet'),
+	('Pablo Picasso'),
+	('Salvador Dali'),
+	('Paul Cezanne');
+	
+	
+
+CREATE TABLE Style(
+StyleID INT NOT NULL AUTO_INCREMENT, 
+ArtStyle VARCHAR(255) NOT NULL,
+PRIMARY KEY(StyleID)
+);
+
+INSERT INTO Style(ArtStyle)
+VALUES 
+	('Impressionism'),
+	('Mannerism'),
+	('Still-life'),
+	('Portrait'),
+	('Realism'),
+	('Cubism'),
+	('Surrealism');
+
+CREATE TABLE Media(
+MediaID INT NOT NULL AUTO_INCREMENT, 
+Medium VARCHAR(255) NOT NULL,
+PRIMARY KEY(MediaID)
+);
+
+INSERT INTO Media(Medium)
+VALUES 
+	('oil'),
+	('pen-ink');
+
+
+CREATE TABLE Painting(
+PaintingID INT NOT NULL AUTO_INCREMENT,
+Title VARCHAR(255) NOT NULL,
+Year INT NOT NULL,
+Thumbnail BLOB,
+Image LONGBLOB,
+ArtistID INT,
+StyleID INT,
+MediaID INT,
+PRIMARY KEY(PaintingID),
+FOREIGN KEY(ArtistID) REFERENCES Artist(ArtistID),
+FOREIGN KEY(StyleID) REFERENCES Style(StyleID),
+FOREIGN KEY(MediaID) REFERENCES Media(MediaID)
+);
+
+INSERT INTO `painting` (`PaintingID`, `Title`, `Year`, `Thumbnail`, `Image`, `ArtistID`, `StyleID`, `MediaID`) VALUES (NULL, 'Bal du moulin de la Galette', '1876', NULL, NULL, '1', '1', '1');
+
+INSERT INTO `painting` (`PaintingID`, `Title`, `Year`, `Thumbnail`, `Image`, `ArtistID`, `StyleID`, `MediaID`) VALUES (NULL, 'Doni Tondo (Doni Madonna)', '1507', NULL, NULL, '2', '2', '1');
+
+INSERT INTO `painting` (`PaintingID`, `Title`, `Year`, `Thumbnail`, `Image`, `ArtistID`, `StyleID`, `MediaID`) VALUES (NULL, 'Vase with Twelve Sunflowers', '1888', NULL, NULL, '3', '3', '1');
+
+INSERT INTO `painting` (`PaintingID`, `Title`, `Year`, `Thumbnail`, `Image`, `ArtistID`, `StyleID`, `MediaID`) VALUES (NULL, 'Mona Lisa', '1503', NULL, NULL, '4', '4', '1');
+
+INSERT INTO `painting` (`PaintingID`, `Title`, `Year`, `Thumbnail`, `Image`, `ArtistID`, `StyleID`, `MediaID`) VALUES (NULL, 'The Potato Eaters', '1885', NULL, NULL, '3', '5', '1');
+
+INSERT INTO `painting` (`PaintingID`, `Title`, `Year`, `Thumbnail`, `Image`, `ArtistID`, `StyleID`, `MediaID`) VALUES (NULL, 'Sunrise', '1972', NULL, NULL, '5', '1', '1');
+
+INSERT INTO `painting` (`PaintingID`, `Title`, `Year`, `Thumbnail`, `Image`, `ArtistID`, `StyleID`, `MediaID`) VALUES (NULL, 'Weaver', '1884', NULL, NULL, '3', '5', '1');
+
+INSERT INTO `painting` (`PaintingID`, `Title`, `Year`, `Thumbnail`, `Image`, `ArtistID`, `StyleID`, `MediaID`) VALUES (NULL, 'Nature morte au compotier', '1914', NULL, NULL, '6', '6', '1');
+
+INSERT INTO `painting` (`PaintingID`, `Title`, `Year`, `Thumbnail`, `Image`, `ArtistID`, `StyleID`, `MediaID`) VALUES (NULL, 'Houses of Parliament', '1899', NULL, NULL, '5', '1', '1');
+
+INSERT INTO `painting` (`PaintingID`, `Title`, `Year`, `Thumbnail`, `Image`, `ArtistID`, `StyleID`, `MediaID`) VALUES (NULL, 'Cafe Terrace at Night', '1888', NULL, NULL, '3', '1', '1');
+
+INSERT INTO `painting` (`PaintingID`, `Title`, `Year`, `Thumbnail`, `Image`, `ArtistID`, `StyleID`, `MediaID`) VALUES (NULL, 'At the Lapin Agile', '1905', NULL, NULL, '6', '1', '1');
+
+INSERT INTO `painting` (`PaintingID`, `Title`, `Year`, `Thumbnail`, `Image`, `ArtistID`, `StyleID`, `MediaID`) VALUES (NULL, 'The Persistence of Memory', '1931', NULL, NULL, '7', '7', '1');
+
+INSERT INTO `painting` (`PaintingID`, `Title`, `Year`, `Thumbnail`, `Image`, `ArtistID`, `StyleID`, `MediaID`) VALUES (NULL, 'The Hallucinogenic Toreador', '1970', NULL, NULL, '7', '7', '1');
+
+INSERT INTO `painting` (`PaintingID`, `Title`, `Year`, `Thumbnail`, `Image`, `ArtistID`, `StyleID`, `MediaID`) VALUES (NULL, 'Jaz de Bouffan', '1877', NULL, NULL, '8', '1', '1');
+
+INSERT INTO `painting` (`PaintingID`, `Title`, `Year`, `Thumbnail`, `Image`, `ArtistID`, `StyleID`, `MediaID`) VALUES (NULL, 'Vitruvian Man', '1490', NULL, NULL, '4', '5', '2');
+
+INSERT INTO `painting` (`PaintingID`, `Title`, `Year`, `Thumbnail`, `Image`, `ArtistID`, `StyleID`, `MediaID`) VALUES (NULL, 'The Kingfisher', '1495', NULL, NULL, '3', '5', '2');

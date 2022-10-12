@@ -15,34 +15,44 @@
   <body>    		    
   <?php
 	include_once('include/navbar.php');
-	include_once('include/db_init_oop.php');
-	include_once('include/db_connect_oop.php');
+	//include_once('include/db_init_oop.php');	
+	include('include/db_connect_pdo.php');		
   ?>
   	<main class="container">
 	  <div class="bg-light p-3 rounded">
 		<h1>Paintings</h1> 
   <?php		
-			$sql = "SELECT id, question from QueDef";
-			$result = $mysqli->query($sql);			
-			if ($result->num_rows>0){
+			try {
+				$sql = "SELECT * FROM painting";
+				$result = $pdo->query($sql);			
+				if ($result->rowCount()>0){
   ?>
 				<div class="row row-cols-3 g-3">
-  <?php				while($row = $result->fetch_assoc()){					?>
-					<div class="card-columns">
-					  <div class="card">
-						<img class="card-img-top" src="..." alt="Card image cap">
-						<div class="card-body">
-						  <h5 class="card-title">Card title</h5>
-						  <p class="card-text">Title :"<?=$row["question"]?>"</p>
-						  <a href="painting.php?&id=<?=$row['id']?>" class="btn btn-primary">View</a>						  
-						</div>						
-					  </div>						  
-					</div>					
-  <?php				} ?>
+  <?php				while($row = $result->fetch()){					?>
+						<div class="card-columns">
+						  <div class="card">
+							<img class="card-img-top" src="data:image/png;base64, <?php echo base64_encode($row['Thumbnail']); ?>" alt="Card image cap">
+							<div class="card-body">
+							  <h5 class="card-title">Title : <?=$row['Title']?></h5>
+							  <p class="card-text">Year : <?=$row['Year']?></p>
+							  <p class="card-text">Artist : <?=$row['ArtistName']?></p>
+							  <p class="card-text">Style : <?=$row['ArtStyle']?></p>
+							  <p class="card-text">Media : <?=$row['Medium']?></p>
+							  <a href="painting.php?&title=<?=$row['Title']?>" class="btn btn-primary">View</a>
+							</div>
+						  </div>						  
+						</div>					
+  <?php				
+					}
+					unset($result);
+  ?>
 				</div>
   <?php				
-			}  					
-			include_once('include/db_close_oop.php');			
+				}  					
+			} catch(PDOException $e) {
+				die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+			}
+			include_once('include/db_close_pdo.php');			
   ?>
 	  </div>
 	</main>  
