@@ -62,7 +62,7 @@
 									<div class="card-body">
 									  <h5 class="card-title">Title : <?=$row['Title']?></h5>
 									  <p class="card-text">Year : <?=$row['Year']?></p>
-									  <p class="card-text">Artist : <?=$row['ArtStyle']?></p>
+									  <p class="card-text">Artist : <?=$row['ArtistName']?></p>
 									  <p class="card-text">Style : <?=$row['ArtStyle']?></p>
 									  <p class="card-text">Media : <?=$row['Medium']?></p>
 									  <a href="painting.php?&title=<?=$row['Title']?>" class="btn btn-primary">View</a>
